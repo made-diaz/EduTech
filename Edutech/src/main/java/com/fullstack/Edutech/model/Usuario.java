@@ -30,4 +30,8 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "rol_id")
     private Rol rol;
+
+    @ManyToOne
+    @JoinColumn(name = "curso")
+    private Curso curso;
 }
