@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fullstack.Edutech.dto.UsuarioRolDTO;
 import com.fullstack.Edutech.model.Rol;
 //import com.fullstack.Edutech.model.Rol;
 import com.fullstack.Edutech.model.Usuario;
@@ -52,6 +53,22 @@ public class UsuarioService {
         }else {
             Usuario usuario = usuarioRepository.findById(id).get();
             Rol rol = rolRepository.findById(rol_id).get();
+
+            usuario.setRol(rol);
+            usuarioRepository.save(usuario);
+
+            return "Rol: " + rol.getNombre() + " asignada correctamente al Usuario " + usuario.getNombre();
+        }
+    }
+
+    public String asignarRol(UsuarioRolDTO dto){
+         if(!usuarioRepository.existsById(dto.getId())){
+            return "El id usuario no existe";
+        }else if(!rolRepository.existsById(dto.getId_rol())){
+            return "El rol ingresado no existe";
+        }else {
+            Usuario usuario = usuarioRepository.findById(dto.getId()).get();
+            Rol rol = rolRepository.findById(dto.getId_rol()).get();
 
             usuario.setRol(rol);
             usuarioRepository.save(usuario);

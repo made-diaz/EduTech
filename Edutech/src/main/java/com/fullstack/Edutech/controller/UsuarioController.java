@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.fullstack.Edutech.dto.UsuarioRolDTO;
 import com.fullstack.Edutech.model.Usuario;
 import com.fullstack.Edutech.service.UsuarioService;
+
 
 @RestController
 @RequestMapping("/usuarios")
@@ -20,10 +21,15 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService; 
 
-
+    /*
     @PostMapping
     public String almacenar(@RequestBody Usuario usuario){
         return usuarioService.almacenar(usuario); 
+    }
+     */
+    @PostMapping
+    public String almacenar(@RequestBody Usuario usuario){
+        return usuarioService.almacenar(usuario);
     }
 
     @GetMapping
@@ -41,4 +47,10 @@ public class UsuarioController {
     public String asignarRol(@PathVariable int id, @PathVariable int rol_id){
         return usuarioService.asignarRol(id, rol_id);
     }
+
+    @PostMapping("/asignar")
+    public String asignarRol(@RequestBody UsuarioRolDTO dto){
+        return usuarioService.asignarRol(dto);
+    }
+
 }
