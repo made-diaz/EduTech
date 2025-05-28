@@ -7,10 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.fullstack.Edutech.dto.UsuarioRolDTO;
 import com.fullstack.Edutech.model.Rol;
-//import com.fullstack.Edutech.model.Rol;
 import com.fullstack.Edutech.model.Usuario;
 import com.fullstack.Edutech.repository.RolRepository;
-//import com.fullstack.Edutech.repository.RolRepository;
 import com.fullstack.Edutech.repository.UsuarioRepository;
 
 @Service
@@ -54,7 +52,7 @@ public class UsuarioService {
             Usuario usuario = usuarioRepository.findById(id).get();
             Rol rol = rolRepository.findById(rol_id).get();
 
-            usuario.setRol(rol);
+            usuario.setRoles(null);
             usuarioRepository.save(usuario);
 
             return "Rol: " + rol.getNombre() + " asignada correctamente al Usuario " + usuario.getNombre();
@@ -70,7 +68,7 @@ public class UsuarioService {
             Usuario usuario = usuarioRepository.findById(dto.getId()).get();
             Rol rol = rolRepository.findById(dto.getId_rol()).get();
 
-            usuario.setRol(rol);
+            usuario.setRoles(null);
             usuarioRepository.save(usuario);
 
             return "Rol: " + rol.getNombre() + " asignada correctamente al Usuario " + usuario.getNombre();
