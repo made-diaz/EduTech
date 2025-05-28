@@ -1,7 +1,8 @@
 package com.fullstack.Edutech.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -38,7 +39,7 @@ public class Usuario {
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "rol_id")
     )
-    private Set<Rol> roles = new HashSet<>();
+    private List<Rol> roles = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "curso")

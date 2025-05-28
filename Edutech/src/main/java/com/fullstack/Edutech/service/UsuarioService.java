@@ -18,6 +18,10 @@ public class UsuarioService {
     @Autowired
     private RolRepository rolRepository;
 
+    // Método para almacenar un nuevo usuario.
+    // Verifica si ya existe un usuario con el mismo nombre para evitar duplicados.
+    // Si no existe, lo guarda y devuelve un mensaje de éxito.
+    // Si ya existe, devuelve un mensaje indicando que ya está creado.
      public String almacenar(Usuario usuario){
          if(usuarioRepository.findByNombre(usuario.getNombre()) == null){
             usuarioRepository.save(usuario);
@@ -27,22 +31,28 @@ public class UsuarioService {
          }
     }
 
+    // Método para listar todos los usuarios existentes en la base de datos.
+    // Simplemente recupera y devuelve todos los registros de la tabla de usuarios.
     public List<Usuario> listar() {
         return usuarioRepository.findAll();
     }
 
+    // Método para buscar usuarios por una parte de su nombre.
+    // Devuelve una lista de usuarios cuyos nombres contengan la cadena 'nombre'
+    // que se pasa como argumento. La búsqueda probablemente es insensible a mayúsculas/minúsculas.
     public List<Usuario> buscar(String nombre){
 
         return usuarioRepository.findByNombreContaining(nombre);
     }
 
 
-    /*public String asignarRol(Rol rol, int id){
-        Usuario usuario = usuarioRepository.findById(id);
-        usuario.setRol(rol);
-    }
-    */
-
+    // Método para asignar un rol a un usuario existente, utilizando los IDs del usuario y del rol.
+    // 1. Verifica si el ID de usuario existe. Si no, devuelve un error.
+    // 2. Verifica si el ID de rol existe. Si no, devuelve un error.
+    // 3. Si ambos existen, recupera el usuario y el rol.
+    // 4. Añade el rol a la lista de roles del usuario (asegurándose de que la lista no sea null).
+    // 5. Guarda el usuario actualizado en la base de datos.
+    // 6. Devuelve un mensaje de éxito.
     public String asignarRol(int id, int rol_id){
         if(!usuarioRepository.existsById(id)){
             return "El id usuario no existe";
@@ -59,6 +69,9 @@ public class UsuarioService {
         }
     }
 
+    // Método sobrecargado para asignar un rol a un usuario, utilizando un objeto DTO (Data Transfer Object).
+    // Este DTO encapsula los IDs del usuario y del rol para una transferencia de datos más segura o específica.
+    // La lógica interna es idéntica al método anterior de 'asignarRol' con IDs individuales.
     public String asignarRol(UsuarioRolDTO dto){
          if(!usuarioRepository.existsById(dto.getId())){
             return "El id usuario no existe";
@@ -73,6 +86,24 @@ public class UsuarioService {
 
             return "Rol: " + rol.getNombre() + " asignada correctamente al Usuario " + usuario.getNombre();
         }
+    }
+
+    // Nuevo método para desactivar un usuario
+    // 1. Verifica si el ID de usuario existe. Si no, devuelve un error.
+    // 2. Si el usuario existe, lo recupera.
+    // 3. Establece el campo 'activo' del usuario a 'false'.
+    // 4. Guarda el usuario actualizado en la base de datos.
+    // 5. Devuelve un mensaje de éxito o de usuario no encontrado.
+    public String desactivar(int Id){
+        if(!usuarioRepository.existsById(Id)){
+            return "No se encontro ningun usuario con con el ID " + Id + ".";
+        }else{
+            Usuario usuario = usuarioRepository.findById(Id).get();
+            usuario.setActivo(false);
+            usuarioRepository.save(usuario);
+            return "Usuario con ID" + Id + "desactivado Exitosamente";
+        }
+
     }
 
 }
