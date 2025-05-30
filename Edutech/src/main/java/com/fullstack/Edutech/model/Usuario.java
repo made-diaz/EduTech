@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,7 +40,8 @@ public class Usuario {
     )
     private List<Rol> roles = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "curso")
-    private Curso curso;
+
+    //uno a muchos
+     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuariosInscritos")
+    private List<Curso> cursosInscritos = new ArrayList<>();
 }
